@@ -1,50 +1,59 @@
-# React + TypeScript + Vite
+# Landing Page JA
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Projeto da Landing Page JA em React + TypeScript + Vite.
 
-Currently, two official plugins are available:
+## Estrutura Atual
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```
+LandingPageJA/
+├─ public/
+│  └─ assets/
+│     ├─ destaques/
+│     ├─ identidade/
+│     │  ├─ fotoscomfundo/
+│     │  └─ semfundo/
+│     └─ uploads/
+├─ src/
+│  ├─ content/
+│  │  └─ sections/
+│  │     ├─ section-02.html
+│  │     ├─ section-03.html
+│  │     ├─ section-04.html
+│  │     ├─ section-05.html
+│  │     ├─ section-06.html
+│  │     └─ section-footer.html
+│  ├─ App.tsx
+│  ├─ App.css
+│  ├─ main.tsx
+│  └─ index.css
+├─ index.html
+├─ package.json
+├─ tsconfig.json
+└─ vite.config.ts
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## Mapa das Seções
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+- section-02.html: bloco de contexto dos 95%
+- section-03.html: seção O Caminho
+- section-04.html: comparação Como Fazemos vs Outras empresas
+- section-05.html: depoimentos
+- section-06.html: Quem somos + mapa
+- section-footer.html: rodapé
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+## Convenções de Organização
+
+- Conteúdo de seção HTML fica centralizado em src/content/sections.
+- Nome de seção segue padrão section-XX.html.
+- Assets consumidos em runtime ficam em public/assets.
+- Código React e estilos globais permanecem em src.
+
+## Scripts
+
+- npm run dev: ambiente local
+- npm run build: build de produção
+- npm run preview: preview da build
+
+## Próximo Passo Sugerido
+
+Para facilitar refatorações futuras, migrar seção por seção de HTML bruto para componentes React dedicados em src/components/sections.

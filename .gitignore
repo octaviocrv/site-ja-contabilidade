@@ -3,3 +3,6 @@ dist/
 .env
 .env.local
 *.tsbuildinfo
+vite.config.ts.timestamp-*.mjs
+.thumbnail
+.gitignore.save

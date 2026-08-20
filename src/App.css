@@ -111,25 +111,54 @@ a {
   gap: 32px;
 }
 
+.navLink,
 .navLinkActive {
   font-family: var(--font-sans);
-  color: var(--gold);
   font-size: 14px;
   font-weight: 500;
-  border-bottom: 1px solid var(--gold);
+  position: relative;
   padding-bottom: 2px;
+  transition: color 0.2s ease;
 }
 
 .navLink {
-  font-family: var(--font-sans);
   color: #999;
-  font-size: 14px;
-  font-weight: 500;
-  transition: color 0.15s;
+}
+
+.navLinkActive {
+  color: var(--gold);
+}
+
+.navLink::after,
+.navLinkActive::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--gold);
+  transform-origin: left center;
+  transition: transform 0.22s ease, opacity 0.22s ease;
+}
+
+.navLink::after {
+  transform: scaleX(0);
+  opacity: 0;
+}
+
+.navLinkActive::after {
+  transform: scaleX(1);
+  opacity: 1;
 }
 
 .navLink:hover {
   color: #fff;
+}
+
+.navLink:hover::after {
+  transform: scaleX(1);
+  opacity: 0.55;
 }
 
 .headerCta {
@@ -546,4 +575,52 @@ a {
 
 .legacyShadowHost {
   display: block;
+  scroll-margin-top: 110px;
+}
+
+.whatsappFloat {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  background: #25d366;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.18) inset;
+  z-index: 220;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.whatsappFloat:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+}
+
+.whatsappFloat:focus-visible {
+  outline: 3px solid #ffffff;
+  outline-offset: 3px;
+}
+
+.whatsappFloat svg {
+  width: 30px;
+  height: 30px;
+  fill: currentColor;
+}
+
+@media (max-width: 680px) {
+  .whatsappFloat {
+    right: 16px;
+    bottom: 16px;
+    width: 56px;
+    height: 56px;
+  }
+
+  .whatsappFloat svg {
+    width: 27px;
+    height: 27px;
+  }
 }

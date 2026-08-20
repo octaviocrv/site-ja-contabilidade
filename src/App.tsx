@@ -1,33 +1,39 @@
-import { useEffect, useMemo, useRef } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import './App.css'
-import sessao2Html from '../Landing Page JA - Sessao 2 Refeito.html?raw'
-import sessao3Html from '../Sessão dois e tres/Credibilidade no perfil JA Contabilidade/Landing Page JA - Sessao 3.dc.html?raw'
-import sessao4Html from '../Landing Page JA - Sessao 4.dc.html?raw'
-import sessao5Html from '../Landing Page JA - Sessao 5.dc.html?raw'
-import sessao6Html from '../Landing Page JA - Sessao 6.dc.html?raw'
-import footerHtml from '../Landing Page JA - Footer.dc.html?raw'
+import sessao2Html from './content/sections/section-02.html?raw'
+import sessao3Html from './content/sections/section-03.html?raw'
+import sessao4Html from './content/sections/section-04.html?raw'
+import sessao5Html from './content/sections/section-05.html?raw'
+import sessao6Html from './content/sections/section-06.html?raw'
+import footerHtml from './content/sections/section-footer.html?raw'
 
 const navLinks = [
-  { label: 'Início', href: '#inicio', active: true },
+  { label: 'Início', href: '#inicio' },
   { label: 'Serviços', href: '#servicos' },
   { label: 'Depoimentos', href: '#depoimentos' },
   { label: 'Sobre nós', href: '#sobre-nos' },
-  { label: 'Perguntas Frequentes', href: '#perguntas' },
 ]
 
 const stats = [
-  { value: '+300', label: 'Clientes Ativos' },
-  { value: 'R$ 21mi', label: 'Economizados em impostos' },
+  { value: '+60', label: 'Clientes Ativos' },
+  { value: 'R$ 4mi', label: 'Economizados em impostos' },
   { value: '97%', label: 'de satisfação no Atendimento' },
-  { value: '+607', label: 'Planejamentos Tributários Entregues' },
+  { value: '+527', label: 'Planejamentos Tributários Entregues' },
 ]
+
+const whatsappLink =
+  'https://wa.me/553131509984?text=Ol%C3%A1%2C%20quero%20falar%20com%20a%20JA%20Contabilidade.'
 
 function LegacyHtmlSection({
   html,
   removeOCaminhoTitle = false,
+  sectionId,
+  whatsappLink,
 }: {
   html: string
   removeOCaminhoTitle?: boolean
+  sectionId?: string
+  whatsappLink: string
 }) {
   const hostRef = useRef<HTMLDivElement>(null)
 
@@ -42,6 +48,19 @@ function LegacyHtmlSection({
       })
     }
 
+    // Mantem a conversao centralizada em WhatsApp, com excecoes marcadas no HTML.
+    Array.from(doc.querySelectorAll('a[href]')).forEach((anchor) => {
+      if (anchor.getAttribute('data-preserve-link') === 'true') {
+        anchor.setAttribute('target', '_blank')
+        anchor.setAttribute('rel', 'noopener noreferrer')
+        return
+      }
+
+      anchor.setAttribute('href', whatsappLink)
+      anchor.setAttribute('target', '_blank')
+      anchor.setAttribute('rel', 'noopener noreferrer')
+    })
+
     const links = Array.from(
       doc.querySelectorAll('helmet link[rel="stylesheet"], head link[rel="stylesheet"], link[rel="stylesheet"]'),
     )
@@ -55,7 +74,7 @@ function LegacyHtmlSection({
       .join('\n')
 
     return [links, styles, blocks].filter(Boolean).join('\n')
-  }, [html, removeOCaminhoTitle])
+  }, [html, removeOCaminhoTitle, whatsappLink])
 
   useEffect(() => {
     if (!hostRef.current) {
@@ -75,10 +94,29 @@ function LegacyHtmlSection({
     })
   }, [content])
 
-  return <div className="legacyShadowHost" ref={hostRef} />
+  return <div id={sectionId} className="legacyShadowHost" ref={hostRef} />
 }
 
 function App() {
+  const [activeHref, setActiveHref] = useState('#inicio')
+
+  useEffect(() => {
+    const syncActiveNavByHash = () => {
+      const hash = window.location.hash
+      const hasNavLinkForHash = navLinks.some((link) => link.href === hash)
+
+      if (hasNavLinkForHash) {
+        setActiveHref(hash)
+      } else if (!hash) {
+        setActiveHref('#inicio')
+      }
+    }
+
+    syncActiveNavByHash()
+    window.addEventListener('hashchange', syncActiveNavByHash)
+    return () => window.removeEventListener('hashchange', syncActiveNavByHash)
+  }, [])
+
   return (
     <div className="page">
       <header className="header">
@@ -92,13 +130,19 @@ function App() {
 
           <nav className="nav">
             {navLinks.map((link) => (
-              <a key={link.label} href={link.href} className={link.active ? 'navLinkActive' : 'navLink'}>
+              <a
+                key={link.label}
+                href={link.href}
+                className={activeHref === link.href ? 'navLinkActive' : 'navLink'}
+                aria-current={activeHref === link.href ? 'page' : undefined}
+                onClick={() => setActiveHref(link.href)}
+              >
                 {link.label}
               </a>
             ))}
           </nav>
 
-          <a href="#contato" className="headerCta">
+          <a href={whatsappLink} className="headerCta" target="_blank" rel="noopener noreferrer">
             Agendar Consultoria
           </a>
         </div>
@@ -118,10 +162,10 @@ function App() {
                 Procurando uma Contabilidade que te ajude a pagar <span className="gold">menos impostos</span>?
               </h1>
               <p className="heroText">
-                Junte-se a mais de <strong>300 empresas</strong> em todo Brasil que já economizaram mais de{' '}
-                <strong>21 milhões</strong> de reais em impostos!
+                Junte-se a mais de <strong>60 empresas</strong> em todo Brasil que já economizaram mais de{' '}
+                <strong>4 milhões</strong> de reais em impostos!
               </p>
-              <a href="#contato" className="heroCta">
+              <a href={whatsappLink} className="heroCta" target="_blank" rel="noopener noreferrer">
                 Agendar consultoria
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -161,7 +205,7 @@ function App() {
                     <path d="M9 13h.01" />
                     <path d="M15 13h.01" />
                   </svg>
-                  <span>+300 empresas atendidas</span>
+                  <span>+60 empresas atendidas</span>
                 </div>
 
                 <div className="floatingStat floatingStatTwo">
@@ -188,7 +232,7 @@ function App() {
               ))}
             </div>
             <span className="proofText">
-              + de <strong>300</strong> empresas já tomaram essa decisão.
+              + de <strong>60</strong> empresas já tomaram essa decisão.
             </span>
           </div>
         </section>
@@ -205,13 +249,26 @@ function App() {
           </div>
         </div>
 
-        <LegacyHtmlSection html={sessao2Html} removeOCaminhoTitle />
-        <LegacyHtmlSection html={sessao3Html} />
-        <LegacyHtmlSection html={sessao4Html} />
-        <LegacyHtmlSection html={sessao5Html} />
-        <LegacyHtmlSection html={sessao6Html} />
-        <LegacyHtmlSection html={footerHtml} />
+        <LegacyHtmlSection html={sessao2Html} removeOCaminhoTitle sectionId="secao-02" whatsappLink={whatsappLink} />
+        <LegacyHtmlSection html={sessao3Html} sectionId="caminho" whatsappLink={whatsappLink} />
+        <LegacyHtmlSection html={sessao4Html} sectionId="servicos" whatsappLink={whatsappLink} />
+        <LegacyHtmlSection html={sessao5Html} sectionId="depoimentos" whatsappLink={whatsappLink} />
+        <LegacyHtmlSection html={sessao6Html} sectionId="sobre-nos" whatsappLink={whatsappLink} />
+        <LegacyHtmlSection html={footerHtml} sectionId="contato" whatsappLink={whatsappLink} />
       </main>
+
+      <a
+        href={whatsappLink}
+        className="whatsappFloat"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Falar no WhatsApp"
+        title="Falar no WhatsApp"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884" />
+        </svg>
+      </a>
     </div>
   )
 }
