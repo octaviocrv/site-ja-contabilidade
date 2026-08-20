@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Serif+Display&display=swap');
-
 :root {
   --font-sans: 'DM Sans', sans-serif;
   --font-serif: 'DM Serif Display', serif;
@@ -149,41 +147,15 @@ a {
 }
 
 /* Hero */
-.heroArea {
-  position: relative;
-  z-index: 0;
+.hero {
   max-width: 1200px;
   margin: 0 auto;
-}
-
-.hero {
-  position: relative;
-  z-index: 1;
   padding: 140px 40px 60px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 40px;
   align-items: center;
   min-height: 80vh;
-}
-
-/* ADICIONADO: Fundo corporativo no lado direito mesclando com preto */
-.heroBgPattern {
-  position: absolute;
-  top: 0;
-  right: calc((100vw - 100%) / -2);
-  width: calc(60% + ((100vw - 100%) / 2)); 
-  height: 100%;
-  /* Substitua pelo caminho da sua imagem de escritório */
-  background-image: url('./assets/pexels-adrien-olichon-1257089-13597052.jpg'); 
-  background-size: cover;
-  background-position: center left;
-  opacity: 0.25; /* Transparência para ficar sutil sobre o preto */
-  z-index: 0;
-  pointer-events: none;
-  /* Cria o efeito de fade-out da imagem para o fundo preto da esquerda */
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 50%);
-  mask-image: linear-gradient(to right, transparent 0%, black 50%);
 }
 
 .heroLeft {
@@ -250,7 +222,6 @@ a {
   height: 400px;
   background: radial-gradient(circle, #c8a55c12 0%, transparent 70%);
   border-radius: 50%;
-  pointer-events: none;
 }
 
 .teamStage {
@@ -378,8 +349,8 @@ a {
 
 /* Social proof row */
 .proofRow {
-  position: relative;
-  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 0 40px 24px;
   display: flex;
   align-items: center;
@@ -475,13 +446,6 @@ a {
     min-height: initial;
     padding-top: 120px;
   }
-  
-  .heroBgPattern {
-    right: 0;
-    width: 100%;
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 50%);
-    mask-image: linear-gradient(to bottom, transparent 0%, black 50%);
-  }
 
   .teamStage {
     width: 100%;
@@ -537,6 +501,3 @@ a {
   }
 }
 
-.legacyShadowHost {
-  display: block;
-}

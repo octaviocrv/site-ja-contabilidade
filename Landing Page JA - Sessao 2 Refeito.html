@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <script src="image-slot.js"></script>
+  <style>
+    body { margin: 0; background: #0A0A0A; }
+    a { color: #C8A55C; text-decoration: none; }
+    a:hover { color: #E0BD75; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+    @keyframes glowSlide { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+  </style>
+</helmet>
+
+<section style="min-height: 100vh; padding: 120px 40px 80px; position: relative; overflow: hidden;">
+
+  <!-- Ambient glow -->
+  <div style="position: absolute; top: 0; right: -200px; width: 500px; height: 500px; background: radial-gradient(circle, #C8A55C10 0%, transparent 70%); pointer-events: none;"></div>
+  <div style="position: absolute; bottom: -100px; left: -100px; width: 400px; height: 400px; background: radial-gradient(circle, #C8A55C08 0%, transparent 70%); pointer-events: none;"></div>
+
+  <!-- Decorative triangle bottom-left -->
+  <div style="position: absolute; bottom: 40px; left: 0; width: 0; height: 0; border-left: 60px solid transparent; border-bottom: 80px solid #C8A55C22; pointer-events: none;"></div>
+
+  <div style="max-width: 1300px; margin: 0 auto; position: relative;">
+
+    <div style="display: grid; grid-template-columns: 420px 1fr; gap: 60px; align-items: center;">
+
+      <!-- LEFT: vertical image -->
+      <div style="position: relative; animation: fadeUp 0.8s 0.1s ease-out both;">
+        <div style="position: absolute; inset: -6px; border-radius: 20px; border: 1px solid #C8A55C33; box-shadow: 0 0 60px #C8A55C22; pointer-events: none;"></div>
+        <img src="/assets/identidade/fotoscomfundo/foto2.jpeg" alt="Foto institucional JA Contabilidade" style="width: 100%; aspect-ratio: 3/4; object-fit: cover; border-radius: 16px; display: block;" loading="lazy">
+        <!-- Badge flutuante topo -->
+        <div style="position: absolute; top: 20px; left: 20px; background: rgba(10,10,10,0.85); backdrop-filter: blur(12px); border: 1px solid #C8A55C55; border-radius: 100px; padding: 8px 16px; display: flex; align-items: center; gap: 8px;">
+          <span style="width: 6px; height: 6px; border-radius: 50%; background: #4ade80;"></span>
+          <span style="font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 600; color: #C8A55C; letter-spacing: 0.5px;">TIME JA · CONTAGEM/MG</span>
+        </div>
+        <!-- Card estatística sobreposto na base -->
+        <div style="position: absolute; bottom: -20px; left: 20px; right: 20px; background: rgba(15,15,15,0.9); backdrop-filter: blur(12px); border: 1px solid #C8A55C44; border-radius: 12px; padding: 14px 18px;">
+          <p style="font-family: 'DM Sans', sans-serif; font-size: 13px; line-height: 1.5; color: #fff; margin: 0;">
+            <span style="color: #C8A55C; font-weight: 700;">"Olhamos nos olhos</span> do seu negócio. Cuidamos dos seus impostos como se fossem os nossos."
+          </p>
+        </div>
+      </div>
+
+      <!-- RIGHT: conteúdo -->
+      <div>
+        <!-- Headline -->
+        <h2 style="font-family: 'DM Sans', sans-serif; font-size: 40px; font-weight: 600; line-height: 1.25; color: #ffffff; margin: 0 0 48px 0; animation: fadeUp 0.8s ease-out both;">
+          <span style="color: #C8A55C;">95% das empresas no Brasil</span> pagam mais impostos do que o necessário
+        </h2>
+
+        <!-- Stats -->
+        <div style="display: flex; gap: 32px; flex-wrap: wrap; margin-bottom: 48px;">
+          <div style="display: flex; align-items: center; gap: 16px; animation: fadeUp 0.8s 0.2s ease-out both;">
+            <div style="width: 96px; height: 96px; background: #111; border: 2px solid #2a2a2a; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+              <span style="font-family: 'DM Sans', sans-serif; font-size: 40px; font-weight: 700; color: #C8A55C;">46</span>
+            </div>
+            <div style="max-width: 200px;">
+              <p style="font-family: 'DM Sans', sans-serif; font-size: 14px; line-height: 1.5; color: #fff; margin: 0;">
+                Novas <span style="color: #C8A55C;">regras tributárias</span> são criadas a cada dia útil
+              </p>
+            </div>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 16px; animation: fadeUp 0.8s 0.4s ease-out both;">
+            <div style="width: 140px; height: 96px; background: #111; border: 2px solid #C8A55C; border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 40px #C8A55C22; flex-shrink: 0;">
+              <span style="font-family: 'DM Sans', sans-serif; font-size: 38px; font-weight: 700; color: #C8A55C;">5,5 bi</span>
+            </div>
+            <div style="max-width: 220px;">
+              <p style="font-family: 'DM Sans', sans-serif; font-size: 14px; line-height: 1.5; color: #fff; margin: 0;">
+                Pagos a mais em <span style="color: #C8A55C;">impostos</span> por falta de planejamento
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Callout -->
+        <div style="position: relative; animation: fadeUp 0.8s 0.6s ease-out both;">
+          <div style="background: linear-gradient(180deg, #111 0%, #0d0d0d 100%); border: 1px solid #2a2a2a; border-radius: 12px; padding: 28px 36px; position: relative;">
+            <p style="font-family: 'DM Sans', sans-serif; font-size: 15px; line-height: 1.7; color: #fff; margin: 0;">
+              Mas existe um <span style="color: #C8A55C;">caminho seguro e legal para que sua empresa não pague mais impostos do que tem de lucro.</span> Se você não segui-lo, irá continuar fazendo do Governo seu sócio majoritário.
+            </p>
+          </div>
+          <div style="position: absolute; bottom: -8px; left: 10%; right: 10%; height: 6px; background: linear-gradient(90deg, transparent, #C8A55C, transparent); border-radius: 100px; box-shadow: 0 0 24px #C8A55C88;"></div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+</x-dc>
+</body>
+</html>

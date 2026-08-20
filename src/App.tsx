@@ -1,4 +1,11 @@
+import { useEffect, useMemo, useRef } from 'react'
 import './App.css'
+import sessao2Html from '../Landing Page JA - Sessao 2 Refeito.html?raw'
+import sessao3Html from '../Sessão dois e tres/Credibilidade no perfil JA Contabilidade/Landing Page JA - Sessao 3.dc.html?raw'
+import sessao4Html from '../Landing Page JA - Sessao 4.dc.html?raw'
+import sessao5Html from '../Landing Page JA - Sessao 5.dc.html?raw'
+import sessao6Html from '../Landing Page JA - Sessao 6.dc.html?raw'
+import footerHtml from '../Landing Page JA - Footer.dc.html?raw'
 
 const navLinks = [
   { label: 'Início', href: '#inicio', active: true },
@@ -14,6 +21,62 @@ const stats = [
   { value: '97%', label: 'de satisfação no Atendimento' },
   { value: '+607', label: 'Planejamentos Tributários Entregues' },
 ]
+
+function LegacyHtmlSection({
+  html,
+  removeOCaminhoTitle = false,
+}: {
+  html: string
+  removeOCaminhoTitle?: boolean
+}) {
+  const hostRef = useRef<HTMLDivElement>(null)
+
+  const content = useMemo(() => {
+    const doc = new DOMParser().parseFromString(html, 'text/html')
+
+    if (removeOCaminhoTitle) {
+      Array.from(doc.querySelectorAll('h1, h2, h3, h4, h5, h6')).forEach((heading) => {
+        if (heading.textContent?.trim() === 'O Caminho') {
+          heading.remove()
+        }
+      })
+    }
+
+    const links = Array.from(
+      doc.querySelectorAll('helmet link[rel="stylesheet"], head link[rel="stylesheet"], link[rel="stylesheet"]'),
+    )
+      .map((node) => node.outerHTML)
+      .join('\n')
+    const styles = Array.from(doc.querySelectorAll('helmet style, head style, style'))
+      .map((node) => node.outerHTML)
+      .join('\n')
+    const blocks = Array.from(doc.querySelectorAll('section, footer'))
+      .map((node) => node.outerHTML)
+      .join('\n')
+
+    return [links, styles, blocks].filter(Boolean).join('\n')
+  }, [html, removeOCaminhoTitle])
+
+  useEffect(() => {
+    if (!hostRef.current) {
+      return
+    }
+
+    const shadowRoot = hostRef.current.shadowRoot ?? hostRef.current.attachShadow({ mode: 'open' })
+    shadowRoot.innerHTML = content
+
+    // Scripts inserted via innerHTML never execute; recreate them so embedded
+    // section behavior (e.g. carousels) actually runs.
+    Array.from(shadowRoot.querySelectorAll('script')).forEach((oldScript) => {
+      const newScript = document.createElement('script')
+      Array.from(oldScript.attributes).forEach((attr) => newScript.setAttribute(attr.name, attr.value))
+      newScript.textContent = oldScript.textContent
+      oldScript.replaceWith(newScript)
+    })
+  }, [content])
+
+  return <div className="legacyShadowHost" ref={hostRef} />
+}
 
 function App() {
   return (
@@ -141,6 +204,13 @@ function App() {
             ))}
           </div>
         </div>
+
+        <LegacyHtmlSection html={sessao2Html} removeOCaminhoTitle />
+        <LegacyHtmlSection html={sessao3Html} />
+        <LegacyHtmlSection html={sessao4Html} />
+        <LegacyHtmlSection html={sessao5Html} />
+        <LegacyHtmlSection html={sessao6Html} />
+        <LegacyHtmlSection html={footerHtml} />
       </main>
     </div>
   )
