@@ -21,16 +21,16 @@
   </style>
 </helmet>
 
-<section style="min-height: 100vh; padding: 80px 40px 40px; position: relative; overflow: hidden;">
+<section class="s03" style="min-height: 100vh; padding: 80px 40px 40px; position: relative; overflow: hidden;">
 
   <!-- Ambient decorative "7" shapes -->
-  <div style="position: absolute; top: 100px; left: 0; width: 0; height: 0; border-left: 80px solid transparent; border-bottom: 120px solid #C8A55C15; pointer-events: none;"></div>
-  <div style="position: absolute; top: 40%; right: 40px; opacity: 0.15; pointer-events: none;">
+  <div class="s03-decor" style="position: absolute; top: 100px; left: 0; width: 0; height: 0; border-left: 80px solid transparent; border-bottom: 120px solid #C8A55C15; pointer-events: none;"></div>
+  <div class="s03-decor" style="position: absolute; top: 40%; right: 40px; opacity: 0.15; pointer-events: none;">
     <svg width="200" height="240" viewBox="0 0 200 240" fill="none">
       <path d="M20 40 L180 40 L80 220" stroke="#C8A55C" stroke-width="3" fill="none"/>
     </svg>
   </div>
-  <div style="position: absolute; bottom: 100px; left: 40px; opacity: 0.1; pointer-events: none;">
+  <div class="s03-decor" style="position: absolute; bottom: 100px; left: 40px; opacity: 0.1; pointer-events: none;">
     <svg width="140" height="180" viewBox="0 0 140 180" fill="none">
       <path d="M15 30 L125 30 L55 165" stroke="#C8A55C" stroke-width="2" fill="none"/>
     </svg>
@@ -39,115 +39,111 @@
   <div style="max-width: 1100px; margin: 0 auto; position: relative;">
 
     <!-- Section title -->
-    <h2 style="font-family: 'DM Sans', sans-serif; font-size: 44px; font-weight: 500; color: #ffffff; text-align: center; margin: 0 0 80px 0; animation: fadeUp 0.8s ease-out both;">
+    <h2 class="s03-title" style="font-family: 'DM Sans', sans-serif; font-size: 44px; font-weight: 500; color: #ffffff; text-align: center; margin: 0 0 80px 0; animation: fadeUp 0.8s ease-out both;">
       O Caminho
     </h2>
 
     <!-- Timeline -->
-    <div style="position: relative; display: grid; grid-template-columns: 1fr 80px 1fr; gap: 0; align-items: center;">
+    <div class="s03-timeline" data-carousel="Etapas do atendimento">
 
-      <!-- Central dashed line -->
-      <div style="position: absolute; top: 60px; bottom: 60px; left: 50%; transform: translateX(-50%); width: 2px; border-left: 2px dashed #C8A55C66; z-index: 0;"></div>
+      <!-- Linha tracejada central -->
+      <div class="s03-line" data-carousel-skip style="position: absolute; top: 60px; bottom: 60px; left: 50%; transform: translateX(-50%); width: 2px; border-left: 2px dashed #C8A55C66; z-index: 0;"></div>
 
-      <!-- STEP 1: text left, icon right -->
-      <!-- Text left -->
-      <div style="text-align: right; padding-right: 40px; animation: fadeUp 0.8s 0.1s ease-out both;">
-        <p style="font-family: 'DM Sans', sans-serif; font-size: 17px; line-height: 1.5; color: #fff; margin: 0; max-width: 320px; margin-left: auto;">
-          Clique no botão e inicie seu atendimento imediatamente via WhatsApp.
-        </p>
-      </div>
-      <!-- Badge center -->
-      <div style="display: flex; justify-content: center; z-index: 1;">
-        <div style="width: 44px; height: 44px; border-radius: 50%; background: #C8A55C; display: flex; align-items: center; justify-content: center;">
-          <span style="font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 700; color: #0A0A0A;">01</span>
+      <!-- ETAPA 01 -->
+      <div class="s03-step" style="animation: fadeUp 0.8s 0.1s ease-out both;">
+        <div class="s03-text-cell" style="text-align: right; padding-right: 40px;">
+          <p class="s03-text" style="font-family: 'DM Sans', sans-serif; font-size: 17px; line-height: 1.5; color: #fff; margin: 0; max-width: 320px; margin-left: auto;">
+            Clique no botão e inicie seu atendimento imediatamente via WhatsApp.
+          </p>
         </div>
-      </div>
-      <!-- Icon right -->
-      <div style="display: flex; justify-content: flex-start; padding-left: 40px; animation: fadeUp 0.8s 0.1s ease-out both;">
-        <div style="width: 120px; height: 120px; border-radius: 50%; background: radial-gradient(circle, #C8A55C15, transparent 70%); border: 1px solid #C8A55C44; display: flex; align-items: center; justify-content: center; animation: iconGlow 3s ease-in-out infinite;">
-          <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#C8A55C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M9 11l3 3L22 4"></path>
-            <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
-          </svg>
+        <div class="s03-badge" style="display: flex; justify-content: center; z-index: 1;">
+          <div style="width: 44px; height: 44px; border-radius: 50%; background: #C8A55C; display: flex; align-items: center; justify-content: center;">
+            <span style="font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 700; color: #0A0A0A;">01</span>
+          </div>
         </div>
-      </div>
-
-      <!-- Spacer -->
-      <div style="grid-column: 1 / -1; height: 80px;"></div>
-
-      <!-- STEP 2: icon left, text right -->
-      <div style="display: flex; justify-content: flex-end; padding-right: 40px; animation: fadeUp 0.8s 0.3s ease-out both;">
-        <div style="width: 120px; height: 120px; border-radius: 50%; background: radial-gradient(circle, #C8A55C15, transparent 70%); border: 1px solid #C8A55C44; display: flex; align-items: center; justify-content: center; animation: iconGlow 3s 0.5s ease-in-out infinite;">
-          <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#C8A55C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"></path>
-          </svg>
-        </div>
-      </div>
-      <div style="display: flex; justify-content: center; z-index: 1;">
-        <div style="width: 44px; height: 44px; border-radius: 50%; background: #C8A55C; display: flex; align-items: center; justify-content: center;">
-          <span style="font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 700; color: #0A0A0A;">02</span>
-        </div>
-      </div>
-      <div style="text-align: left; padding-left: 40px; animation: fadeUp 0.8s 0.3s ease-out both;">
-        <p style="font-family: 'DM Sans', sans-serif; font-size: 17px; line-height: 1.5; color: #fff; margin: 0; max-width: 340px;">
-          Converse com um de nossos especialistas para o mapeamento ágil do seu cenário atual.
-        </p>
-      </div>
-
-      <!-- Spacer -->
-      <div style="grid-column: 1 / -1; height: 80px;"></div>
-
-      <!-- STEP 3: text left, icon right -->
-      <div style="text-align: right; padding-right: 40px; animation: fadeUp 0.8s 0.5s ease-out both;">
-        <p style="font-family: 'DM Sans', sans-serif; font-size: 17px; line-height: 1.5; color: #fff; margin: 0; max-width: 320px; margin-left: auto;">
-         Participe de uma reunião online de consultoria e diagnóstico tributário.
-        </p>
-      </div>
-      <div style="display: flex; justify-content: center; z-index: 1;">
-        <div style="width: 44px; height: 44px; border-radius: 50%; background: #C8A55C; display: flex; align-items: center; justify-content: center;">
-          <span style="font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 700; color: #0A0A0A;">03</span>
-        </div>
-      </div>
-      <div style="display: flex; justify-content: flex-start; padding-left: 40px; animation: fadeUp 0.8s 0.5s ease-out both;">
-        <div style="width: 120px; height: 120px; border-radius: 50%; background: radial-gradient(circle, #C8A55C15, transparent 70%); border: 1px solid #C8A55C44; display: flex; align-items: center; justify-content: center; animation: iconGlow 3s 1s ease-in-out infinite;">
-          <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#C8A55C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="9" cy="7" r="4"></circle>
-            <path d="M3 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"></path>
-            <circle cx="17" cy="8" r="3"></circle>
-            <path d="M17 14l1.5 1.5L22 12"></path>
-          </svg>
+        <div class="s03-icon" style="display: flex; justify-content: flex-start; padding-left: 40px;">
+          <div style="width: 120px; height: 120px; border-radius: 50%; background: radial-gradient(circle, #C8A55C15, transparent 70%); border: 1px solid #C8A55C44; display: flex; align-items: center; justify-content: center; animation: iconGlow 3s ease-in-out infinite;">
+            <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#C8A55C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 11l3 3L22 4"></path>
+              <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
+            </svg>
+          </div>
         </div>
       </div>
 
-      <!-- Spacer -->
-      <div style="grid-column: 1 / -1; height: 80px;"></div>
+      <!-- ETAPA 02 -->
+      <div class="s03-step" style="animation: fadeUp 0.8s 0.3s ease-out both;">
+        <div class="s03-icon" style="display: flex; justify-content: flex-end; padding-right: 40px;">
+          <div style="width: 120px; height: 120px; border-radius: 50%; background: radial-gradient(circle, #C8A55C15, transparent 70%); border: 1px solid #C8A55C44; display: flex; align-items: center; justify-content: center; animation: iconGlow 3s 0.5s ease-in-out infinite;">
+            <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#C8A55C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"></path>
+            </svg>
+          </div>
+        </div>
+        <div class="s03-badge" style="display: flex; justify-content: center; z-index: 1;">
+          <div style="width: 44px; height: 44px; border-radius: 50%; background: #C8A55C; display: flex; align-items: center; justify-content: center;">
+            <span style="font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 700; color: #0A0A0A;">02</span>
+          </div>
+        </div>
+        <div class="s03-text-cell" style="text-align: left; padding-left: 40px;">
+          <p class="s03-text" style="font-family: 'DM Sans', sans-serif; font-size: 17px; line-height: 1.5; color: #fff; margin: 0; max-width: 340px;">
+            Converse com um de nossos especialistas para o mapeamento ágil do seu cenário atual.
+          </p>
+        </div>
+      </div>
 
-      <!-- STEP 4: icon left, text right -->
-      <div style="display: flex; justify-content: flex-end; padding-right: 40px; animation: fadeUp 0.8s 0.7s ease-out both;">
-        <div style="width: 120px; height: 120px; border-radius: 50%; background: radial-gradient(circle, #C8A55C15, transparent 70%); border: 1px solid #C8A55C44; display: flex; align-items: center; justify-content: center; animation: iconGlow 3s 1.5s ease-in-out infinite;">
-          <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#C8A55C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="3" width="18" height="14" rx="2"></rect>
-            <line x1="8" y1="21" x2="16" y2="21"></line>
-            <line x1="12" y1="17" x2="12" y2="21"></line>
-            <polyline points="7 13 10 10 13 12 17 8"></polyline>
-          </svg>
+      <!-- ETAPA 03 -->
+      <div class="s03-step" style="animation: fadeUp 0.8s 0.5s ease-out both;">
+        <div class="s03-text-cell" style="text-align: right; padding-right: 40px;">
+          <p class="s03-text" style="font-family: 'DM Sans', sans-serif; font-size: 17px; line-height: 1.5; color: #fff; margin: 0; max-width: 320px; margin-left: auto;">
+            Participe de uma reunião online de consultoria e diagnóstico tributário.
+          </p>
+        </div>
+        <div class="s03-badge" style="display: flex; justify-content: center; z-index: 1;">
+          <div style="width: 44px; height: 44px; border-radius: 50%; background: #C8A55C; display: flex; align-items: center; justify-content: center;">
+            <span style="font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 700; color: #0A0A0A;">03</span>
+          </div>
+        </div>
+        <div class="s03-icon" style="display: flex; justify-content: flex-start; padding-left: 40px;">
+          <div style="width: 120px; height: 120px; border-radius: 50%; background: radial-gradient(circle, #C8A55C15, transparent 70%); border: 1px solid #C8A55C44; display: flex; align-items: center; justify-content: center; animation: iconGlow 3s 1s ease-in-out infinite;">
+            <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#C8A55C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M3 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"></path>
+              <circle cx="17" cy="8" r="3"></circle>
+              <path d="M17 14l1.5 1.5L22 12"></path>
+            </svg>
+          </div>
         </div>
       </div>
-      <div style="display: flex; justify-content: center; z-index: 1;">
-        <div style="width: 44px; height: 44px; border-radius: 50%; background: #C8A55C; display: flex; align-items: center; justify-content: center;">
-          <span style="font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 700; color: #0A0A0A;">04</span>
+
+      <!-- ETAPA 04 -->
+      <div class="s03-step" style="animation: fadeUp 0.8s 0.7s ease-out both;">
+        <div class="s03-icon" style="display: flex; justify-content: flex-end; padding-right: 40px;">
+          <div style="width: 120px; height: 120px; border-radius: 50%; background: radial-gradient(circle, #C8A55C15, transparent 70%); border: 1px solid #C8A55C44; display: flex; align-items: center; justify-content: center; animation: iconGlow 3s 1.5s ease-in-out infinite;">
+            <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#C8A55C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="14" rx="2"></rect>
+              <line x1="8" y1="21" x2="16" y2="21"></line>
+              <line x1="12" y1="17" x2="12" y2="21"></line>
+              <polyline points="7 13 10 10 13 12 17 8"></polyline>
+            </svg>
+          </div>
         </div>
-      </div>
-      <div style="text-align: left; padding-left: 40px; animation: fadeUp 0.8s 0.7s ease-out both;">
-        <p style="font-family: 'DM Sans', sans-serif; font-size: 17px; line-height: 1.5; color: #fff; margin: 0; max-width: 340px;">
-          Receba um plano de ação estruturado visando a otimização e redução da sua carga tributária.
-        </p>
+        <div class="s03-badge" style="display: flex; justify-content: center; z-index: 1;">
+          <div style="width: 44px; height: 44px; border-radius: 50%; background: #C8A55C; display: flex; align-items: center; justify-content: center;">
+            <span style="font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 700; color: #0A0A0A;">04</span>
+          </div>
+        </div>
+        <div class="s03-text-cell" style="text-align: left; padding-left: 40px;">
+          <p class="s03-text" style="font-family: 'DM Sans', sans-serif; font-size: 17px; line-height: 1.5; color: #fff; margin: 0; max-width: 340px;">
+            Receba um plano de ação estruturado visando a otimização e redução da sua carga tributária.
+          </p>
+        </div>
       </div>
 
     </div>
 
     <!-- CTA -->
-    <div style="text-align: center; margin-top: 100px; animation: fadeUp 0.8s 0.9s ease-out both;">
+    <div class="s03-cta" style="text-align: center; margin-top: 100px; animation: fadeUp 0.8s 0.9s ease-out both;">
       <a href="#form" style="display: inline-flex; align-items: center; gap: 10px; font-family: 'DM Sans', sans-serif; color: #0A0A0A; font-size: 15px; font-weight: 600; background: #C8A55C; padding: 18px 40px; border-radius: 100px; transition: transform 0.15s, box-shadow 0.15s; box-shadow: 0 4px 24px #C8A55C33;" style-hover="transform: translateY(-2px); box-shadow: 0 8px 32px #C8A55C55;">
         Quero saber se estou pagando impostos a mais
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -161,10 +157,10 @@
 </section>
 
 <!-- MARQUEE de palavras-chave -->
-<section style="padding: 60px 0 32px; overflow: hidden; position: relative;">
+<section class="s03-marquee" style="padding: 60px 0 32px; overflow: hidden; position: relative;">
   <!-- Fade laterais -->
-  <div style="position: absolute; top: 0; bottom: 0; left: 0; width: 200px; background: linear-gradient(90deg, #0A0A0A, transparent); z-index: 2; pointer-events: none;"></div>
-  <div style="position: absolute; top: 0; bottom: 0; right: 0; width: 200px; background: linear-gradient(-90deg, #0A0A0A, transparent); z-index: 2; pointer-events: none;"></div>
+  <div class="s03-marquee-fade" style="position: absolute; top: 0; bottom: 0; left: 0; width: 200px; background: linear-gradient(90deg, #0A0A0A, transparent); z-index: 2; pointer-events: none;"></div>
+  <div class="s03-marquee-fade" style="position: absolute; top: 0; bottom: 0; right: 0; width: 200px; background: linear-gradient(-90deg, #0A0A0A, transparent); z-index: 2; pointer-events: none;"></div>
 
   <!-- Row 1: esquerda -->
   <div style="overflow: hidden; margin-bottom: 20px;">

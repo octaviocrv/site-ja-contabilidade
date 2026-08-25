@@ -21,7 +21,7 @@
   </style>
 </helmet>
 
-<section id="sobre" style="min-height: 100vh; padding: 100px 40px 56px; position: relative; overflow: hidden;">
+<section id="sobre" class="s06" style="min-height: 100vh; padding: 100px 40px 56px; position: relative; overflow: hidden;">
 
   <div style="max-width: 1300px; margin: 0 auto; position: relative;">
 
@@ -31,30 +31,33 @@
       <!-- SLIDE 1: Quem somos -->
       <div class="ja-slide">
         <div style="animation: slideIn 0.5s ease-out both;">
-          <div style="display: grid; grid-template-columns: 1fr 1.1fr; gap: 60px; align-items: center;">
+          <div class="s06-about" style="display: grid; grid-template-columns: 1fr 1.1fr; gap: 60px; align-items: center;">
 
             <!-- Photo -->
             <div style="display: flex; justify-content: center;">
-              <div style="position: relative; width: 480px; height: 480px;">
+              <div class="s06-photo" style="position: relative; width: 480px; height: 480px;">
                 <div style="position: absolute; inset: -8px; border-radius: 50%; border: 1px solid #C8A55C33; box-shadow: 0 0 60px #C8A55C22;"></div>
-                <img src="/assets/identidade/fotoscomfundo/foto5.jpeg" alt="Equipe JA Contabilidade" style="width: 480px; height: 480px; border-radius: 50%; object-fit: cover; object-position: center; display: block;" loading="lazy">
+                <picture>
+                  <source type="image/webp" srcset="/assets/otimizadas/foto5-700.webp">
+                  <img src="/assets/otimizadas/foto5-700.jpg" alt="Equipe JA Contabilidade" style="width: 480px; height: 480px; border-radius: 50%; object-fit: cover; object-position: center; display: block;" loading="lazy" decoding="async">
+                </picture>
               </div>
             </div>
 
             <!-- Content card -->
             <div style="position: relative;">
-              <div style="position: absolute; top: -30px; right: -10px; width: 90px; height: 90px; z-index: 2; pointer-events: none;">
+              <div class="s06-decor" style="position: absolute; top: -30px; right: -10px; width: 90px; height: 90px; z-index: 2; pointer-events: none;">
                 <svg viewBox="0 0 90 90" fill="none">
                   <path d="M20 10 L80 10 L80 70 L60 50 L60 30 L20 30 Z" fill="#C8A55C" opacity="0.9"/>
                 </svg>
               </div>
-              <div style="position: absolute; bottom: -40px; left: -30px; width: 70px; height: 90px; z-index: 2; pointer-events: none;">
+              <div class="s06-decor" style="position: absolute; bottom: -40px; left: -30px; width: 70px; height: 90px; z-index: 2; pointer-events: none;">
                 <svg viewBox="0 0 70 90" fill="none">
                   <path d="M10 20 L30 20 L30 60 L60 60 L60 80 L10 80 Z" fill="#C8A55C" opacity="0.9"/>
                 </svg>
               </div>
 
-              <div style="background: linear-gradient(180deg, #111 0%, #0d0d0d 100%); border: 1px solid #2a2a2a; border-radius: 20px; padding: 48px 52px; position: relative;">
+              <div class="s06-card" style="background: linear-gradient(180deg, #111 0%, #0d0d0d 100%); border: 1px solid #2a2a2a; border-radius: 20px; padding: 48px 52px; position: relative;">
                 <h2 style="font-family: 'DM Sans', sans-serif; font-size: 34px; font-weight: 700; color: #ffffff; margin: 0 0 32px 0;">Quem somos?</h2>
                 <div style="position: relative;">
                   <div style="position: absolute; left: 6px; top: 8px; bottom: 8px; border-left: 1px dashed #C8A55C55;"></div>
@@ -95,13 +98,15 @@
       <!-- SLIDE 2: Mapa -->
       <div class="ja-slide" style="display: none;">
         <div style="animation: slideIn 0.5s ease-out both;">
-          <div style="position: relative; max-width: 980px; margin: 0 auto; border-radius: 20px; overflow: hidden; border: 1px solid #2a2a2a; aspect-ratio: 16/10;">
+          <div class="s06-map" style="position: relative; max-width: 980px; margin: 0 auto; border-radius: 20px; overflow: hidden; border: 1px solid #2a2a2a; aspect-ratio: 16/10;">
 
             <!-- Map iframe -->
-            <iframe src="https://maps.google.com/maps?q=R.+Cel.+Durval+de+Barros,+842,+Contagem+-+MG&z=16&output=embed" title="Localização JA Contabilidade" loading="lazy" referrerpolicy="no-referrer-when-downgrade" style="position: absolute; inset: 0; width: 100%; height: 100%; border: 0; pointer-events: none;"></iframe>
+            <div class="s06-map-frame" style="position: absolute; inset: 0;">
+              <iframe src="https://maps.google.com/maps?q=R.+Cel.+Durval+de+Barros,+842,+Contagem+-+MG&z=16&output=embed" title="Localização JA Contabilidade" loading="lazy" referrerpolicy="no-referrer-when-downgrade" style="position: absolute; inset: 0; width: 100%; height: 100%; border: 0; pointer-events: none;"></iframe>
+            </div>
 
             <!-- Address card top-left -->
-            <div style="position: absolute; top: 32px; left: 32px; z-index: 20; background: rgba(15,15,15,0.85); backdrop-filter: blur(16px); border: 1px solid #C8A55C33; border-radius: 16px; padding: 20px 24px; max-width: 300px;">
+            <div class="s06-map-addr" style="position: absolute; top: 32px; left: 32px; z-index: 20; background: rgba(15,15,15,0.85); backdrop-filter: blur(16px); border: 1px solid #C8A55C33; border-radius: 16px; padding: 20px 24px; max-width: 300px;">
               <h3 style="font-family: 'DM Sans', sans-serif; font-size: 18px; font-weight: 700; color: #fff; margin: 0 0 6px 0;">R. Cel. Durval de Barros, 842</h3>
               <p style="font-family: 'DM Sans', sans-serif; font-size: 13px; color: #999; margin: 0 0 16px 0; line-height: 1.5;">
                 Sala 206 — Durval de Barros<br>Contagem — MG, 32242-310
@@ -116,7 +121,7 @@
             </div>
 
             <!-- Bottom overlay card -->
-            <div style="position: absolute; bottom: 32px; left: 32px; right: 32px; z-index: 20; background: rgba(15,15,15,0.85); backdrop-filter: blur(16px); border: 1px solid #C8A55C33; border-radius: 16px; padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; gap: 20px;">
+            <div class="s06-map-bar" style="position: absolute; bottom: 32px; left: 32px; right: 32px; z-index: 20; background: rgba(15,15,15,0.85); backdrop-filter: blur(16px); border: 1px solid #C8A55C33; border-radius: 16px; padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; gap: 20px;">
               <div style="display: flex; align-items: center; gap: 16px;">
                 <div style="width: 48px; height: 48px; border-radius: 12px; background: #C8A55C22; border: 1px solid #C8A55C55; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 20px #C8A55C33;">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="#C8A55C">
@@ -145,12 +150,12 @@
       </div>
 
       <!-- Nav arrows -->
-      <button data-action="prev" style="position: absolute; top: 50%; left: -20px; transform: translateY(-50%); width: 48px; height: 48px; border-radius: 50%; background: rgba(15,15,15,0.85); backdrop-filter: blur(8px); border: 1px solid #C8A55C44; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 30; transition: all 0.2s;">
+      <button data-action="prev" class="s06-arrow" aria-label="Slide anterior" style="position: absolute; top: 50%; left: -20px; transform: translateY(-50%); width: 48px; height: 48px; border-radius: 50%; background: rgba(15,15,15,0.85); backdrop-filter: blur(8px); border: 1px solid #C8A55C44; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 30; transition: all 0.2s;">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C8A55C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="pointer-events: none;">
           <polyline points="15 18 9 12 15 6"></polyline>
         </svg>
       </button>
-      <button data-action="next" style="position: absolute; top: 50%; right: -20px; transform: translateY(-50%); width: 48px; height: 48px; border-radius: 50%; background: rgba(15,15,15,0.85); backdrop-filter: blur(8px); border: 1px solid #C8A55C44; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 30; transition: all 0.2s;">
+      <button data-action="next" class="s06-arrow" aria-label="Próximo slide" style="position: absolute; top: 50%; right: -20px; transform: translateY(-50%); width: 48px; height: 48px; border-radius: 50%; background: rgba(15,15,15,0.85); backdrop-filter: blur(8px); border: 1px solid #C8A55C44; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 30; transition: all 0.2s;">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C8A55C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="pointer-events: none;">
           <polyline points="9 18 15 12 9 6"></polyline>
         </svg>
@@ -159,7 +164,7 @@
     </div>
 
     <!-- Dots -->
-    <div style="display: flex; justify-content: center; gap: 10px; margin-top: 40px;">
+    <div class="s06-dots" style="display: flex; justify-content: center; gap: 10px; margin-top: 40px;">
       <button class="ja-dot" style="width: 32px; height: 8px; border-radius: 100px; border: none; cursor: pointer; background: #C8A55C; transition: background 0.2s;"></button>
       <button class="ja-dot" style="width: 32px; height: 8px; border-radius: 100px; border: none; cursor: pointer; background: #333; transition: background 0.2s;"></button>
     </div>

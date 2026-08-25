@@ -1,0 +1,503 @@
+/*
+ * Camada responsiva das secoes legadas (HTML com estilo inline, renderizado em
+ * Shadow DOM). Como estilo inline vence qualquer seletor, os ajustes de layout
+ * aqui precisam de `!important` -- e a unica forma de sobrepor sem reescrever
+ * cada atributo style das secoes.
+ *
+ * Breakpoints:
+ *   <= 480px   celular pequeno (iPhone SE, Galaxy A)
+ *   <= 767px   celular
+ *   768-1023   tablet
+ *   1024-1439  notebook
+ *   >= 1440    desktop
+ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+img,
+svg,
+iframe {
+  max-width: 100%;
+}
+
+/* --------------------------------------------------------- Ajustes globais */
+
+/* Colunas de grid nao podem crescer para caber o conteudo de um carrossel. */
+.s02-grid > *,
+.s04-grid > *,
+.s06-about > *,
+.sft-grid > * {
+  min-width: 0;
+}
+
+@media (max-width: 1023px) {
+  section,
+  footer {
+    min-height: auto !important;
+  }
+}
+
+/* -------------------------------------------------- Secao 02 -- o problema */
+
+@media (max-width: 1279px) {
+  .s02 > div > div {
+    gap: 36px !important;
+  }
+}
+
+@media (max-width: 1023px) {
+  .s02 {
+    padding: 72px 28px 40px !important;
+  }
+
+  .s02-grid {
+    grid-template-columns: 1fr !important;
+    gap: 56px !important;
+  }
+
+  .s02-photo {
+    max-width: 460px;
+    margin: 0 auto;
+    width: 100%;
+  }
+}
+
+@media (max-width: 767px) {
+  .s02 {
+    padding: 56px 20px 32px !important;
+  }
+
+  .s02-grid {
+    gap: 48px !important;
+  }
+
+  .s02-title {
+    font-size: clamp(24px, 6.4vw, 34px) !important;
+    margin-bottom: 32px !important;
+  }
+
+  .s02-photo img {
+    aspect-ratio: 4 / 5 !important;
+  }
+
+  .s02-stats {
+    flex-direction: column !important;
+    flex-wrap: nowrap !important;
+    gap: 24px !important;
+  }
+
+  .s02-stat {
+    align-items: center !important;
+  }
+
+  .s02-callout {
+    padding: 22px 20px !important;
+  }
+}
+
+/* --------------------------------------------------- Secao 03 -- o caminho */
+
+.s03-timeline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+}
+
+.s03-step {
+  display: grid;
+  grid-template-columns: 1fr 80px 1fr;
+  align-items: center;
+}
+
+@media (max-width: 1023px) {
+  .s03 {
+    padding: 64px 28px 32px !important;
+  }
+
+  .s03-timeline {
+    gap: 56px;
+  }
+
+  .s03-step {
+    grid-template-columns: 1fr 64px 1fr;
+  }
+
+  .s03-icon > div {
+    width: 92px !important;
+    height: 92px !important;
+  }
+
+  .s03-icon > div > svg {
+    width: 40px;
+    height: 40px;
+  }
+
+  .s03-text {
+    font-size: 15px !important;
+  }
+
+  .s03-decor {
+    display: none !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .s03 {
+    padding: 48px 20px 24px !important;
+  }
+
+  .s03-title {
+    font-size: clamp(28px, 8vw, 40px) !important;
+    margin-bottom: 40px !important;
+  }
+
+  .s03-line {
+    display: none !important;
+  }
+
+  /* Cada etapa vira um card vertical: numero, icone e texto. */
+  .s03-step {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 18px;
+    background: linear-gradient(180deg, #111 0%, #0d0d0d 100%);
+    border: 1px solid #2a2a2a;
+    border-radius: 16px;
+    padding: 28px 22px;
+  }
+
+  .s03-badge {
+    order: 1;
+  }
+
+  .s03-icon {
+    order: 2;
+    justify-content: center !important;
+    padding: 0 !important;
+  }
+
+  .s03-icon > div {
+    width: 84px !important;
+    height: 84px !important;
+  }
+
+  .s03-text-cell {
+    order: 3;
+    text-align: center !important;
+    padding: 0 !important;
+  }
+
+  .s03-text {
+    max-width: none !important;
+    margin: 0 !important;
+    font-size: 15px !important;
+  }
+
+  .s03-cta {
+    margin-top: 48px !important;
+  }
+
+  .s03-cta a {
+    font-size: 14px !important;
+    padding: 16px 26px !important;
+    text-align: left;
+    line-height: 1.4;
+  }
+
+  .s03-marquee {
+    padding: 40px 0 24px !important;
+  }
+
+  .s03-marquee-fade {
+    width: 56px !important;
+  }
+
+  .s03-marquee span {
+    font-size: 13px !important;
+    padding: 8px 18px !important;
+  }
+}
+
+/* ------------------------------------------- Secao 04 -- comparativo duplo */
+
+@media (max-width: 1279px) {
+  .s04-card {
+    padding: 30px 26px !important;
+  }
+}
+
+@media (max-width: 1023px) {
+  .s04 {
+    padding: 72px 28px 48px !important;
+  }
+
+  .s04-grid {
+    grid-template-columns: 1fr !important;
+    gap: 64px !important;
+  }
+
+  .s04-bg-text {
+    font-size: clamp(120px, 26vw, 260px) !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .s04 {
+    padding: 56px 20px 40px !important;
+  }
+
+  .s04-grid {
+    gap: 56px !important;
+  }
+
+  .s04-title {
+    font-size: clamp(26px, 7.4vw, 34px) !important;
+    margin-bottom: 24px !important;
+  }
+
+  .s04-card > * {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .s04-cta {
+    margin-top: 36px !important;
+  }
+
+  .s04-cta a {
+    font-size: 14px !important;
+    padding: 16px 30px !important;
+  }
+}
+
+/* ------------------------------------------------ Secao 05 -- depoimentos */
+
+@media (max-width: 1279px) {
+  .s05-grid {
+    gap: 24px !important;
+  }
+}
+
+@media (max-width: 1023px) {
+  .s05 {
+    padding: 72px 28px 48px !important;
+  }
+
+  .s05-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .s05-header {
+    margin-bottom: 48px !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .s05 {
+    padding: 56px 20px 40px !important;
+  }
+
+  .s05-title {
+    font-size: clamp(28px, 8vw, 40px) !important;
+  }
+
+  .s05-header {
+    margin-bottom: 36px !important;
+  }
+
+  .s05-grid > * {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .s05-quote {
+    flex: 1;
+    min-height: 0 !important;
+    padding: 26px 22px 34px !important;
+  }
+
+  .s05-author {
+    left: 12px !important;
+    right: 12px !important;
+    padding: 8px 12px !important;
+  }
+
+  /* Nome do autor leva ao perfil no Google: precisa de altura de toque. */
+  .s05-author a {
+    padding: 5px 0;
+  }
+}
+
+/* ----------------------------------------------- Secao 06 -- sobre / mapa */
+
+@media (max-width: 1279px) {
+  .s06-about {
+    gap: 40px !important;
+  }
+}
+
+@media (max-width: 1023px) {
+  .s06 {
+    padding: 72px 28px 48px !important;
+  }
+
+  .s06-about {
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
+  }
+
+  .s06-photo,
+  .s06-photo img {
+    width: min(420px, 70vw) !important;
+    height: auto !important;
+    aspect-ratio: 1 !important;
+  }
+
+  .s06-card {
+    padding: 34px 30px !important;
+  }
+
+  .s06-arrow {
+    left: 0 !important;
+    right: 0 !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .s06 {
+    padding: 56px 20px 40px !important;
+  }
+
+  .s06-photo,
+  .s06-photo img {
+    width: min(300px, 74vw) !important;
+  }
+
+  .s06-decor {
+    display: none !important;
+  }
+
+  .s06-card {
+    padding: 26px 20px !important;
+  }
+
+  .s06-card h2 {
+    font-size: clamp(24px, 7vw, 30px) !important;
+  }
+
+  /* Setas somem no celular: o deslize e feito pelos indicadores abaixo. */
+  .s06-arrow {
+    display: none !important;
+  }
+
+  .s06-dots {
+    gap: 16px !important;
+  }
+
+  .s06-dots button {
+    height: 10px !important;
+    position: relative;
+  }
+
+  .s06-dots button::after {
+    content: '';
+    position: absolute;
+    inset: -15px -8px;
+  }
+
+  /* O mapa deixa de ser palco de cards sobrepostos e vira pilha vertical. */
+  .s06-map {
+    aspect-ratio: auto !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    overflow: visible !important;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .s06-map-frame {
+    position: relative !important;
+    height: 240px;
+    border: 1px solid #2a2a2a;
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .s06-map-addr,
+  .s06-map-bar {
+    position: static !important;
+    max-width: none !important;
+    padding: 18px 20px !important;
+  }
+
+  .s06-map-bar {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 16px !important;
+  }
+
+  .s06-map-bar a {
+    justify-content: center;
+  }
+}
+
+/* ------------------------------------------------------------- Rodape */
+
+@media (max-width: 1023px) {
+  .sft {
+    padding: 64px 28px 28px !important;
+  }
+
+  .sft-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 40px !important;
+    margin-bottom: 40px !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .sft {
+    padding: 48px 20px 24px !important;
+  }
+
+  .sft-grid {
+    gap: 32px 20px !important;
+  }
+
+  /* Marca e contato ocupam a linha inteira; os links ficam lado a lado. */
+  .sft-brand,
+  .sft-contact {
+    grid-column: 1 / -1;
+  }
+
+  .sft-bottom {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 14px !important;
+  }
+
+  /* Links do rodape ganham altura de toque confortavel no celular. */
+  .sft-grid ul {
+    gap: 2px !important;
+  }
+
+  .sft-grid ul a,
+  .sft-bottom a {
+    display: block;
+    padding: 8px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .sft-grid {
+    grid-template-columns: 1fr !important;
+  }
+}

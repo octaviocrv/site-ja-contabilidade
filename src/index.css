@@ -9,6 +9,18 @@ body,
   min-height: 100%;
 }
 
+html {
+  /* Compensa o header fixo ao navegar pelas âncoras do menu. */
+  scroll-padding-top: 88px;
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (max-width: 767px) {
+  html {
+    scroll-padding-top: 76px;
+  }
+}
+
 body {
   min-width: 320px;
   background: #0a0a0a;

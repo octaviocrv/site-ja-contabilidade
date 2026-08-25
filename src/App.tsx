@@ -1,11 +1,19 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import './App.css'
+import './legacy/carousel.css'
+import carouselCss from './legacy/carousel.css?raw'
+import legacyResponsiveCss from './legacy/legacy-responsive.css?raw'
+import { enhanceCarousels } from './legacy/carousel'
 import sessao2Html from './content/sections/section-02.html?raw'
 import sessao3Html from './content/sections/section-03.html?raw'
 import sessao4Html from './content/sections/section-04.html?raw'
 import sessao5Html from './content/sections/section-05.html?raw'
 import sessao6Html from './content/sections/section-06.html?raw'
 import footerHtml from './content/sections/section-footer.html?raw'
+
+// O Shadow DOM isola as secoes legadas, entao a camada responsiva precisa ser
+// injetada em cada raiz.
+const shadowStyle = `<style>${carouselCss}\n${legacyResponsiveCss}</style>`
 
 const navLinks = [
   { label: 'Início', href: '#inicio' },
@@ -20,6 +28,12 @@ const stats = [
   { value: '97%', label: 'de satisfação no Atendimento' },
   { value: '+527', label: 'Planejamentos Tributários Entregues' },
 ]
+
+const teamPhotoSizes = '(max-width: 767px) 100vw, (max-width: 1023px) 72vw, (max-width: 1439px) 46vw, 540px'
+const teamPhotoWebp =
+  '/assets/otimizadas/time-800.webp 800w, /assets/otimizadas/time-1100.webp 1100w, /assets/otimizadas/time-1600.webp 1600w'
+const teamPhotoPng =
+  '/assets/otimizadas/time-800.png 800w, /assets/otimizadas/time-1100.png 1100w, /assets/otimizadas/time-1600.png 1600w'
 
 const whatsappLink =
   'https://wa.me/553131509984?text=Ol%C3%A1%2C%20quero%20falar%20com%20a%20JA%20Contabilidade.'
@@ -73,7 +87,8 @@ function LegacyHtmlSection({
       .map((node) => node.outerHTML)
       .join('\n')
 
-    return [links, styles, blocks].filter(Boolean).join('\n')
+    // A camada responsiva vem depois dos estilos originais da secao.
+    return [links, styles, shadowStyle, blocks].filter(Boolean).join('\n')
   }, [html, removeOCaminhoTitle, whatsappLink])
 
   useEffect(() => {
@@ -92,13 +107,36 @@ function LegacyHtmlSection({
       newScript.textContent = oldScript.textContent
       oldScript.replaceWith(newScript)
     })
+
+    return enhanceCarousels(shadowRoot)
   }, [content])
 
   return <div id={sectionId} className="legacyShadowHost" ref={hostRef} />
 }
 
+function MenuIcon({ open }: { open: boolean }) {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+      {open ? (
+        <>
+          <line x1="6" y1="6" x2="18" y2="18" />
+          <line x1="18" y1="6" x2="6" y2="18" />
+        </>
+      ) : (
+        <>
+          <line x1="3" y1="7" x2="21" y2="7" />
+          <line x1="3" y1="12" x2="21" y2="12" />
+          <line x1="3" y1="17" x2="21" y2="17" />
+        </>
+      )}
+    </svg>
+  )
+}
+
 function App() {
   const [activeHref, setActiveHref] = useState('#inicio')
+  const [menuOpen, setMenuOpen] = useState(false)
+  const statsRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const syncActiveNavByHash = () => {
@@ -117,16 +155,50 @@ function App() {
     return () => window.removeEventListener('hashchange', syncActiveNavByHash)
   }, [])
 
+  // O menu so existe abaixo de 1024px; ao voltar para notebook/desktop ele fecha.
+  useEffect(() => {
+    const desktop = window.matchMedia('(min-width: 1024px)')
+    const close = () => setMenuOpen(false)
+    desktop.addEventListener('change', close)
+    return () => desktop.removeEventListener('change', close)
+  }, [])
+
+  useEffect(() => {
+    if (!menuOpen) {
+      return
+    }
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setMenuOpen(false)
+    }
+
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    window.addEventListener('keydown', onKeyDown)
+
+    return () => {
+      document.body.style.overflow = previousOverflow
+      window.removeEventListener('keydown', onKeyDown)
+    }
+  }, [menuOpen])
+
+  useEffect(() => {
+    if (!statsRef.current) {
+      return
+    }
+    return enhanceCarousels(statsRef.current.parentElement ?? statsRef.current)
+  }, [])
+
   return (
-    <div className="page">
+    <>
       <header className="header">
         <div className="headerInner">
-          <div className="logoGroup">
+          <a href="#inicio" className="logoGroup" onClick={() => setActiveHref('#inicio')}>
             <div className="logoCircle">
-              <img src="/assets/uploads/Logo.jpeg" alt="JA Contabilidade" />
+              <img src="/assets/otimizadas/logo-160.jpg" alt="" width={40} height={40} />
             </div>
             <span className="logoText">JA Contabilidade</span>
-          </div>
+          </a>
 
           <nav className="nav">
             {navLinks.map((link) => (
@@ -145,10 +217,51 @@ function App() {
           <a href={whatsappLink} className="headerCta" target="_blank" rel="noopener noreferrer">
             Agendar Consultoria
           </a>
+
+          <button
+            type="button"
+            className="menuToggle"
+            aria-label={menuOpen ? 'Fechar menu' : 'Abrir menu'}
+            aria-expanded={menuOpen}
+            aria-controls="menu-mobile"
+            onClick={() => setMenuOpen((open) => !open)}
+          >
+            <MenuIcon open={menuOpen} />
+          </button>
+        </div>
+
+        <div id="menu-mobile" className={menuOpen ? 'mobileMenuOpen' : 'mobileMenu'} hidden={!menuOpen}>
+          <nav className="mobileMenuNav">
+            {navLinks.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                className={activeHref === link.href ? 'mobileLinkActive' : 'mobileLink'}
+                aria-current={activeHref === link.href ? 'page' : undefined}
+                onClick={() => {
+                  setActiveHref(link.href)
+                  setMenuOpen(false)
+                }}
+              >
+                {link.label}
+              </a>
+            ))}
+          </nav>
+          <a
+            href={whatsappLink}
+            className="mobileMenuCta"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setMenuOpen(false)}
+          >
+            Agendar Consultoria
+          </a>
         </div>
       </header>
 
-      <main>
+      {menuOpen && <div className="menuBackdrop" onClick={() => setMenuOpen(false)} aria-hidden="true" />}
+
+      <main className="page">
         <section className="heroArea">
           {/* Fundo compartilhado entre hero e prova social */}
           <div className="heroBgPattern" aria-hidden="true" />
@@ -181,12 +294,23 @@ function App() {
                 </div>
 
                 <div className="teamPhotoWrap">
-                  <img src="/assets/identidade/semfundo/foto-time-tamanho-real.png" alt="Equipe JA Contabilidade" />
+                  <picture>
+                    <source type="image/webp" srcSet={teamPhotoWebp} sizes={teamPhotoSizes} />
+                    <img
+                      src="/assets/otimizadas/time-1100.png"
+                      srcSet={teamPhotoPng}
+                      sizes={teamPhotoSizes}
+                      width={4032}
+                      height={2945}
+                      alt="Equipe JA Contabilidade"
+                      decoding="async"
+                    />
+                  </picture>
                   <div className="teamPhotoFade" />
                 </div>
 
                 <div className="teamCaption">
-                  <img src="/assets/uploads/Logo.jpeg" alt="Logo JA" />
+                  <img src="/assets/otimizadas/logo-160.jpg" alt="" width={40} height={40} loading="lazy" />
                   <div>
                     <span className="teamCaptionTitle">JA Contabilidade e Perícia</span>
                     <span className="teamCaptionText">
@@ -238,7 +362,7 @@ function App() {
         </section>
 
         <div className="statsSection">
-          <div className="statsGrid">
+          <div className="statsGrid" data-carousel="Números da JA Contabilidade" ref={statsRef}>
             {stats.map((stat) => (
               <div className="statCard" key={stat.label}>
                 <div className="statGlowLine" />
@@ -269,7 +393,7 @@ function App() {
           <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884" />
         </svg>
       </a>
-    </div>
+    </>
   )
 }
 

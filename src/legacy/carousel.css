@@ -1,0 +1,115 @@
+/*
+ * Carrossel deslizante para celular. O comportamento e todo CSS (scroll-snap
+ * nativo, com inercia correta em Android e iOS); o modulo `carousel.ts` apenas
+ * monta os indicadores de pagina.
+ *
+ * Marcacao esperada:
+ *   [data-carousel]        vira trilho deslizante <= 767px; filhos viram cards
+ *   [data-carousel-cards]  o container era um card unico -- o chrome migra
+ *                          para cada filho no celular
+ *   [data-carousel-skip]   filho que nao conta como item (ex.: decoracao)
+ *
+ * As regras usam !important porque as secoes legadas trazem estilo inline.
+ */
+
+.ja-dots {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  /* O item vira card proprio quando a lista morava dentro de um card unico. */
+  [data-carousel-cards] {
+    background: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  [data-carousel-cards] > * {
+    background: linear-gradient(180deg, #111 0%, #0d0d0d 100%) !important;
+    border: 1px solid #2a2a2a !important;
+    border-radius: 16px !important;
+    padding: 24px 22px !important;
+  }
+
+  [data-carousel] {
+    /* Sem isto, a largura intrinseca do trilho (a soma dos cards) empurra a
+       coluna de grid/flex que o contem e vaza o conteudo vizinho. */
+    contain: inline-size;
+    min-width: 0 !important;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: stretch !important;
+    grid-template-columns: none !important;
+    gap: 14px !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    margin-left: -20px !important;
+    margin-right: -20px !important;
+    scroll-padding-left: 20px;
+    scroll-padding-right: 20px;
+  }
+
+  [data-carousel]::-webkit-scrollbar {
+    display: none;
+  }
+
+  [data-carousel] > * {
+    flex: 0 0 84% !important;
+    max-width: 84% !important;
+    min-width: 0;
+    scroll-snap-align: start;
+  }
+
+  .ja-dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+  }
+
+  .ja-dots button {
+    position: relative;
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    border: 0;
+    border-radius: 100px;
+    background: #3a3a3a;
+    cursor: pointer;
+    transition: width 0.25s ease, background 0.25s ease;
+  }
+
+  /* Alvo de toque de 36px sem alterar o tamanho visual do indicador. */
+  .ja-dots button::after {
+    content: '';
+    position: absolute;
+    inset: -14px -12px;
+  }
+
+  .ja-dots button:focus-visible {
+    outline: 2px solid #c8a55c;
+    outline-offset: 4px;
+  }
+
+  .ja-dots button[aria-current='true'] {
+    width: 24px;
+    background: #c8a55c;
+  }
+}
+
+@media (max-width: 480px) {
+  [data-carousel] > * {
+    flex-basis: 88% !important;
+    max-width: 88% !important;
+  }
+}

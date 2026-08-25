@@ -1,15 +1,28 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Serif+Display&display=swap');
 
+/*
+ * Breakpoints do projeto:
+ *   <= 480px    celular pequeno (iPhone SE, Galaxy A)
+ *   481-767px   celular
+ *   768-1023px  tablet / celular em paisagem
+ *   1024-1439px notebook
+ *   >= 1440px   desktop
+ */
+
 :root {
   --font-sans: 'DM Sans', sans-serif;
   --font-serif: 'DM Serif Display', serif;
   --gold: #c8a55c;
   --bg: #0a0a0a;
+  --header-h: 72px;
 }
 
 .page {
   min-height: 100vh;
   background: var(--bg);
+  /* `clip` corta o sangramento lateral do fundo do hero sem criar um novo
+     contexto de rolagem (o que `hidden` faria). */
+  overflow-x: clip;
 }
 
 a {
@@ -78,12 +91,15 @@ a {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 16px;
 }
 
 .logoGroup {
   display: flex;
   align-items: center;
   gap: 12px;
+  flex-shrink: 0;
+  min-width: 0;
 }
 
 .logoCircle {
@@ -91,6 +107,7 @@ a {
   height: 40px;
   border-radius: 50%;
   overflow: hidden;
+  flex-shrink: 0;
 }
 
 .logoCircle img {
@@ -103,6 +120,7 @@ a {
   font-family: var(--font-serif);
   color: #fff;
   font-size: 18px;
+  white-space: nowrap;
 }
 
 .nav {
@@ -119,6 +137,7 @@ a {
   position: relative;
   padding-bottom: 2px;
   transition: color 0.2s ease;
+  white-space: nowrap;
 }
 
 .navLink {
@@ -171,10 +190,40 @@ a {
   border-radius: 6px;
   letter-spacing: 0.3px;
   transition: opacity 0.15s;
+  white-space: nowrap;
 }
 
 .headerCta:hover {
   opacity: 0.9;
+}
+
+/* Menu de celular / tablet */
+.menuToggle {
+  display: none;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid #ffffff1f;
+  border-radius: 10px;
+  color: #fff;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.menuToggle:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+.mobileMenu,
+.mobileMenuOpen {
+  display: none;
+}
+
+.menuBackdrop {
+  display: none;
 }
 
 /* Hero */
@@ -194,35 +243,45 @@ a {
   gap: 40px;
   align-items: center;
   min-height: 80vh;
+  scroll-margin-top: var(--header-h);
 }
 
-/* ADICIONADO: Fundo corporativo no lado direito mesclando com preto */
+/* Fundo corporativo no lado direito mesclando com preto */
 .heroBgPattern {
   position: absolute;
   top: 0;
   right: calc((100vw - 100%) / -2);
-  width: calc(60% + ((100vw - 100%) / 2)); 
+  width: calc(60% + ((100vw - 100%) / 2));
   height: 100%;
-  /* Substitua pelo caminho da sua imagem de escritório */
-  background-image: url('./assets/pexels-adrien-olichon-1257089-13597052.jpg'); 
+  background-image: url('./assets/bg-hero-1400.jpg');
+  background-image: image-set(
+    url('./assets/bg-hero-1400.webp') type('image/webp'),
+    url('./assets/bg-hero-1400.jpg') type('image/jpeg')
+  );
   background-size: cover;
   background-position: center left;
   opacity: 0.25; /* Transparência para ficar sutil sobre o preto */
   z-index: 0;
   pointer-events: none;
-  /* Cria o efeito de fade-out da imagem para o fundo preto da esquerda */
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 50%);
-  mask-image: linear-gradient(to right, transparent 0%, black 50%);
+  /* Fade lateral (esquerda) + fade vertical (topo e base) para a imagem
+     dissolver no preto em vez de terminar num corte reto. */
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 50%),
+    linear-gradient(to bottom, transparent 0%, black 12%, black 74%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to right, transparent 0%, black 50%),
+    linear-gradient(to bottom, transparent 0%, black 12%, black 74%, transparent 100%);
+  mask-composite: intersect;
 }
 
 .heroLeft {
   animation: fadeUp 0.8s ease-out both;
+  min-width: 0;
 }
 
 .heroTitle {
   font-family: var(--font-serif);
   color: #ffffff;
-  font-size: 52px;
+  font-size: clamp(40px, 4vw, 52px);
   line-height: 1.15;
   margin: 0 0 24px 0;
   font-weight: 400;
@@ -248,6 +307,7 @@ a {
 .heroCta {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   font-family: var(--font-sans);
   color: #0a0a0a;
@@ -271,12 +331,14 @@ a {
   justify-content: center;
   align-items: center;
   animation: fadeUp 0.8s 0.2s ease-out both;
+  min-width: 0;
 }
 
 .glowOrb {
   position: absolute;
   width: 400px;
   height: 400px;
+  max-width: 100%;
   background: radial-gradient(circle, #c8a55c12 0%, transparent 70%);
   border-radius: 50%;
   pointer-events: none;
@@ -299,6 +361,7 @@ a {
   margin-bottom: 16px;
   box-shadow: 0 0 24px rgba(200, 165, 92, 0.25);
   animation: float 4s 0.3s ease-in-out infinite;
+  text-align: center;
 }
 
 .teamPill span {
@@ -309,21 +372,29 @@ a {
   letter-spacing: 1.5px;
 }
 
+/*
+ * A foto do time é horizontal (4032x2945 após o corte das bordas vazias) e as
+ * três pessoas ocupam toda a largura do quadro. Por isso ela nunca é recortada:
+ * a proporção original é preservada em qualquer tela e apenas a escala muda.
+ */
 .teamPhotoWrap {
   position: relative;
-  width: 540px;
-  max-width: 100%;
-  height: 460px;
+  width: 100%;
+  max-width: 540px;
+  aspect-ratio: 4032 / 2945;
   overflow: hidden;
 }
 
+.teamPhotoWrap picture,
 .teamPhotoWrap img {
+  display: block;
   width: 100%;
   height: 100%;
+}
+
+.teamPhotoWrap img {
   object-fit: contain;
   object-position: bottom;
-  transform: scale(1.12);
-  transform-origin: center bottom;
   filter: drop-shadow(0 8px 32px rgba(0, 0, 0, 0.5));
 }
 
@@ -356,6 +427,7 @@ a {
   border-radius: 50%;
   object-fit: cover;
   border: 1px solid #c8a55c44;
+  flex-shrink: 0;
 }
 
 .teamCaptionTitle {
@@ -395,14 +467,15 @@ a {
   font-weight: 600;
 }
 
+/* Ancorados em % da altura do palco para acompanharem a foto em cada tela. */
 .floatingStatOne {
-  top: 300px;
+  top: 58%;
   left: -30px;
   animation: float 3s 0.5s ease-in-out infinite;
 }
 
 .floatingStatTwo {
-  top: 340px;
+  top: 68%;
   right: -20px;
   animation: float 3s 1s ease-in-out infinite;
 }
@@ -415,6 +488,7 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
   gap: 12px;
 }
 
@@ -441,6 +515,7 @@ a {
   font-family: var(--font-sans);
   color: #888;
   font-size: 14px;
+  text-align: center;
 }
 
 .proofText strong {
@@ -495,87 +570,9 @@ a {
   font-size: 13px;
 }
 
-/* Responsive */
-@media (max-width: 980px) {
-  .nav {
-    display: none;
-  }
-
-  .hero {
-    grid-template-columns: 1fr;
-    min-height: initial;
-    padding-top: 120px;
-  }
-  
-  .heroBgPattern {
-    right: 0;
-    width: 100%;
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 50%);
-    mask-image: linear-gradient(to bottom, transparent 0%, black 50%);
-  }
-
-  .teamStage {
-    width: 100%;
-  }
-
-  .teamPhotoWrap {
-    width: 100%;
-    height: 420px;
-  }
-
-  .teamPhotoWrap img {
-    transform: none;
-  }
-
-  .statsGrid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 680px) {
-  .headerInner {
-    padding: 14px 20px;
-  }
-
-  .headerCta {
-    display: none;
-  }
-
-  .hero {
-    padding: 110px 20px 40px;
-  }
-
-  .heroTitle {
-    font-size: 34px;
-  }
-
-  .proofRow {
-    padding: 0 20px 24px;
-  }
-
-  .statsSection {
-    padding: 16px 20px 60px;
-  }
-
-  .statsGrid {
-    grid-template-columns: 1fr;
-  }
-
-  .floatingStat {
-    position: static;
-    display: inline-flex;
-    margin-top: 8px;
-  }
-
-  .floatingStatOne,
-  .floatingStatTwo {
-    animation: none;
-  }
-}
-
 .legacyShadowHost {
   display: block;
-  scroll-margin-top: 110px;
+  scroll-margin-top: calc(var(--header-h) + 16px);
 }
 
 .whatsappFloat {
@@ -611,7 +608,278 @@ a {
   fill: currentColor;
 }
 
-@media (max-width: 680px) {
+/* ======================================================= Notebook (<=1439) */
+
+@media (max-width: 1439px) {
+  .hero {
+    padding: 128px 32px 52px;
+    gap: 32px;
+  }
+
+  .heroText {
+    font-size: 16px;
+    margin-bottom: 30px;
+  }
+
+  .teamStage {
+    width: 470px;
+  }
+
+  .floatingStat {
+    padding: 7px 13px;
+  }
+
+  .floatingStat span {
+    font-size: 11px;
+  }
+
+  .floatingStatOne {
+    top: 58%;
+    left: -50px;
+  }
+
+  .floatingStatTwo {
+    top: 70%;
+    right: -42px;
+  }
+
+  .proofRow {
+    padding: 0 32px 24px;
+  }
+
+  .statsSection {
+    padding: 16px 32px 64px;
+  }
+
+  .statValue {
+    font-size: 34px;
+  }
+
+  .statCard {
+    padding: 26px 18px;
+  }
+}
+
+/* ========================================================= Tablet (<=1023) */
+
+@media (max-width: 1023px) {
+  .nav,
+  .headerCta {
+    display: none;
+  }
+
+  .menuToggle {
+    display: inline-flex;
+  }
+
+  .headerInner {
+    padding: 14px 28px;
+  }
+
+  .mobileMenuOpen {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px 28px 24px;
+    border-top: 1px solid #ffffff12;
+    background: rgba(10, 10, 10, 0.97);
+    animation: fadeUp 0.22s ease-out both;
+    max-height: calc(100dvh - var(--header-h));
+    overflow-y: auto;
+  }
+
+  .mobileMenuNav {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mobileLink,
+  .mobileLinkActive {
+    font-family: var(--font-sans);
+    font-size: 16px;
+    font-weight: 500;
+    padding: 14px 4px;
+    border-bottom: 1px solid #ffffff0d;
+  }
+
+  .mobileLink {
+    color: #b9b9b9;
+  }
+
+  .mobileLinkActive {
+    color: var(--gold);
+  }
+
+  .mobileMenuCta {
+    margin-top: 12px;
+    text-align: center;
+    font-family: var(--font-sans);
+    font-size: 15px;
+    font-weight: 600;
+    color: #0a0a0a;
+    background: var(--gold);
+    padding: 15px 24px;
+    border-radius: 10px;
+  }
+
+  .menuBackdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    background: rgba(0, 0, 0, 0.55);
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+    min-height: 0;
+    padding: 112px 28px 40px;
+    gap: 44px;
+    text-align: center;
+    justify-items: center;
+  }
+
+  .heroBgPattern {
+    right: 0;
+    width: 100%;
+    background-position: center;
+    /* Sem colunas, a imagem concorre com a foto do time: fica mais discreta. */
+    opacity: 0.16;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 30%, black 76%, transparent 100%);
+    -webkit-mask-composite: source-over;
+    mask-image: linear-gradient(to bottom, transparent 0%, black 30%, black 76%, transparent 100%);
+    mask-composite: add;
+  }
+
+  .heroTitle {
+    font-size: clamp(34px, 5.2vw, 46px);
+  }
+
+  .heroText {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .teamStage {
+    width: 100%;
+    max-width: 560px;
+  }
+
+  .teamPhotoWrap {
+    max-width: 100%;
+  }
+
+  /* Sem espaço lateral para flutuar: viram legendas empilhadas sob a foto. */
+  .floatingStat {
+    position: static;
+    animation: none;
+    margin-top: 10px;
+  }
+
+  .proofRow {
+    padding: 0 28px 24px;
+  }
+
+  .statsSection {
+    padding: 16px 28px 56px;
+  }
+
+  .statsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ======================================================== Celular (<=767) */
+
+@media (max-width: 767px) {
+  :root {
+    --header-h: 64px;
+  }
+
+  .headerInner {
+    padding: 12px 20px;
+  }
+
+  .logoText {
+    font-size: 16px;
+  }
+
+  .mobileMenuOpen {
+    padding: 10px 20px 20px;
+  }
+
+  /* Versão leve do fundo: 53 KB em WebP no lugar de 155 KB. */
+  .heroBgPattern {
+    background-image: url('./assets/bg-hero-760.jpg');
+    background-image: image-set(
+      url('./assets/bg-hero-760.webp') type('image/webp'),
+      url('./assets/bg-hero-760.jpg') type('image/jpeg')
+    );
+  }
+
+  .hero {
+    /* A foto sangra até as bordas para ganhar o máximo de área na tela. */
+    padding: 92px 0 32px;
+    gap: 32px;
+  }
+
+  .heroLeft {
+    padding: 0 20px;
+  }
+
+  .heroTitle {
+    font-size: clamp(27px, 7.6vw, 36px);
+    margin-bottom: 18px;
+  }
+
+  .heroText {
+    font-size: 15px;
+    line-height: 1.65;
+    margin-bottom: 28px;
+  }
+
+  .heroCta {
+    width: 100%;
+    max-width: 340px;
+    padding: 16px 24px;
+  }
+
+  .teamPill {
+    margin-bottom: 12px;
+  }
+
+  .teamCaption {
+    margin-left: 16px;
+    margin-right: 16px;
+    padding: 12px 16px;
+    gap: 12px;
+  }
+
+  .teamCaptionText {
+    font-size: 11.5px;
+  }
+
+  .floatingStat {
+    margin-top: 8px;
+    padding: 8px 14px;
+  }
+
+  .proofRow {
+    padding: 0 20px 20px;
+  }
+
+  .proofText {
+    font-size: 13px;
+  }
+
+  .statsSection {
+    padding: 8px 20px 48px;
+  }
+
+  .statCard {
+    padding: 28px 20px;
+  }
+
   .whatsappFloat {
     right: 16px;
     bottom: 16px;
@@ -622,5 +890,75 @@ a {
   .whatsappFloat svg {
     width: 27px;
     height: 27px;
+  }
+}
+
+/* ================================================ Celular pequeno (<=480) */
+
+@media (max-width: 480px) {
+  .headerInner {
+    padding: 10px 16px;
+    gap: 10px;
+  }
+
+  .logoCircle {
+    width: 36px;
+    height: 36px;
+  }
+
+  .logoText {
+    font-size: 15px;
+  }
+
+  .mobileMenuOpen {
+    padding: 10px 16px 18px;
+  }
+
+  .hero {
+    padding: 86px 0 28px;
+  }
+
+  .heroLeft {
+    padding: 0 16px;
+  }
+
+  .heroCta {
+    font-size: 14px;
+  }
+
+  .teamCaption {
+    margin-left: 12px;
+    margin-right: 12px;
+  }
+
+  .teamCaptionTitle {
+    font-size: 14px;
+  }
+
+  .floatingStat span {
+    font-size: 11px;
+  }
+
+  .proofRow {
+    padding: 0 16px 20px;
+  }
+
+  .statsSection {
+    padding: 8px 20px 40px;
+  }
+
+  .statValue {
+    font-size: 32px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
