@@ -7,6 +7,7 @@ import { enhanceCarousels } from './legacy/carousel'
 import sessao2Html from './content/sections/section-02.html?raw'
 import sessao3Html from './content/sections/section-03.html?raw'
 import sessao4Html from './content/sections/section-04.html?raw'
+import servicosHtml from './content/sections/section-servicos.html?raw'
 import sessao5Html from './content/sections/section-05.html?raw'
 import sessao6Html from './content/sections/section-06.html?raw'
 import footerHtml from './content/sections/section-footer.html?raw'
@@ -375,7 +376,8 @@ function App() {
 
         <LegacyHtmlSection html={sessao2Html} removeOCaminhoTitle sectionId="secao-02" whatsappLink={whatsappLink} />
         <LegacyHtmlSection html={sessao3Html} sectionId="caminho" whatsappLink={whatsappLink} />
-        <LegacyHtmlSection html={sessao4Html} sectionId="servicos" whatsappLink={whatsappLink} />
+        <LegacyHtmlSection html={sessao4Html} sectionId="como-fazemos" whatsappLink={whatsappLink} />
+        <LegacyHtmlSection html={servicosHtml} sectionId="servicos" whatsappLink={whatsappLink} />
         <LegacyHtmlSection html={sessao5Html} sectionId="depoimentos" whatsappLink={whatsappLink} />
         <LegacyHtmlSection html={sessao6Html} sectionId="sobre-nos" whatsappLink={whatsappLink} />
         <LegacyHtmlSection html={footerHtml} sectionId="contato" whatsappLink={whatsappLink} />

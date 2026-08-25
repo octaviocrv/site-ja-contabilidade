@@ -277,6 +277,55 @@ iframe {
   }
 }
 
+/* ------------------------------------------------- Secao Servicos -- grade */
+
+.ssv-grid > * {
+  min-width: 0;
+}
+
+@media (max-width: 1279px) {
+  .ssv-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .ssv-card {
+    padding: 28px 24px !important;
+  }
+}
+
+@media (max-width: 1023px) {
+  .ssv {
+    padding: 72px 28px 48px !important;
+  }
+
+  .ssv-header {
+    margin-bottom: 48px !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .ssv {
+    padding: 56px 20px 40px !important;
+  }
+
+  .ssv-title {
+    font-size: clamp(26px, 7.4vw, 34px) !important;
+  }
+
+  .ssv-sub {
+    font-size: 15px !important;
+  }
+
+  .ssv-cta {
+    margin-top: 36px !important;
+  }
+
+  .ssv-cta a {
+    font-size: 14px !important;
+    padding: 16px 30px !important;
+  }
+}
+
 /* ------------------------------------------------ Secao 05 -- depoimentos */
 
 @media (max-width: 1279px) {
