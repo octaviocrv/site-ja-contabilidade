@@ -11,6 +11,10 @@ import servicosHtml from './content/sections/section-servicos.html?raw'
 import sessao5Html from './content/sections/section-05.html?raw'
 import sessao6Html from './content/sections/section-06.html?raw'
 import footerHtml from './content/sections/section-footer.html?raw'
+import logoClubeTalento from './assets/WhatsApp Image 2026-08-25 at 11.10.46logos.jpeg'
+import logoHiaMecanica from './assets/WhatsApp Image 2026-08-25 at 11.11.42logos.jpeg'
+import logoCarvalhoPlanejados from './assets/WhatsApp Image 2026-08-25 at 11.18.39logos.jpeg'
+import logoCalifaLabel from './assets/Captura de tela de 2026-08-25 11-19-26logos.png'
 
 // O Shadow DOM isola as secoes legadas, entao a camada responsiva precisa ser
 // injetada em cada raiz.
@@ -28,6 +32,13 @@ const stats = [
   { value: 'R$ 4mi', label: 'Economizados em impostos' },
   { value: '97%', label: 'de satisfação no Atendimento' },
   { value: '+527', label: 'Planejamentos Tributários Entregues' },
+]
+
+const clientLogos = [
+  { src: logoClubeTalento, alt: 'Logo Clube do Talento' },
+  { src: logoHiaMecanica, alt: 'Logo Hia Mecanica Automotiva' },
+  { src: logoCarvalhoPlanejados, alt: 'Logo Carvalho Planejados' },
+  { src: logoCalifaLabel, alt: 'Logo Califa Label' },
 ]
 
 const teamPhotoSizes = '(max-width: 767px) 100vw, (max-width: 1023px) 72vw, (max-width: 1439px) 46vw, 540px'
@@ -347,12 +358,9 @@ function App() {
 
           <div className="proofRow">
             <div className="avatarStack">
-              {['#C8A55C', '#A8894A', '#D4B96E', '#8B7340'].map((color, index) => (
-                <div className="avatar" style={{ background: color }} key={color + index}>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="#0A0A0A">
-                    <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path>
-                    <circle cx="12" cy="7" r="4"></circle>
-                  </svg>
+              {clientLogos.map((logo, index) => (
+                <div className="avatar" key={logo.alt + index}>
+                  <img src={logo.src} alt={logo.alt} loading="lazy" />
                 </div>
               ))}
             </div>
